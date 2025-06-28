@@ -26,15 +26,26 @@ This helps ensure your reusable app is **self-contained, fully functional, and t
 1. DjangifyLab first setup
 Follow these steps to install setup DjangifyLab (just for the first time):
 
+- Clone the repository:
 ```bash
 git clone https://github.com/Lorygold/DjangifyLab.git
 cd DjangifyLab
+```
+- Create and activate the virtual environment:
+```bash
 python -m venv djangifylab-venv
 source djangifylab-venv/bin/activate
+```
+- Install the DjangifyLab requirements:
+```bash
 pip install -r requirements.txt
 ```
+- Create your admin Django superuser to access to the Django admin page (store your credentials):
+```bash
+python manage.py createsuperuser
+```
 
-2. Install your Django App
+2. Install your Django App to test
 ```bash
 source djangifylab-venv/bin/activate
 python install_app.py example-apps/your_app.tar.gz
