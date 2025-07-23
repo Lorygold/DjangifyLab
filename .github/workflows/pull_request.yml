@@ -28,11 +28,14 @@ jobs:
 
       - name: Black linter
         run: |
+          source venv/bin/activate
           black --config .github/configurations/python_linters/.black .
       - name: Flake8 linter
         run: |
+          source venv/bin/activate
           flake8 . --show-source --config .github/configurations/python_linters/.flake8
       - name: Isort linter
         run: |
+          source venv/bin/activate
           isort --sp .github/configurations/python_linters/.isort.cfg --profile black .
       
