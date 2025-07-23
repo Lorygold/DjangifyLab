@@ -12,13 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Install dependencies
         run: |
           if [ -d "venv" ]; then rm -rf venv; fi
           python3 -m venv venv
           source venv/bin/activate
           pip install --upgrade pip
-          pip install flake8 black isort pytest
+          pip install flake8 black isort
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Black linter
