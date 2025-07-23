@@ -15,4 +15,5 @@ ignore =
     E402,
 
 exclude =
+    venv,
     Dockerfile
