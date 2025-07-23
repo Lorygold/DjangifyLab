@@ -1,0 +1,41 @@
+name: Pull Request Workflow
+
+on: [pull_request]
+
+jobs:
+  pull_request:
+    name: Pull Request Workflow
+    runs-on: ubuntu-latest
+
+    # services:
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          if [ -d "venv" ]; then rm -rf venv; fi
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install flake8 black isort
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Black linter
+        run: |
+          source venv/bin/activate
+          black --config .github/configurations/python_linters/.black .
+      - name: Flake8 linter
+        run: |
+          source venv/bin/activate
+          flake8 . --show-source --config ${GITHUB_WORKSPACE}/.github/configurations/python_linters/.flake8
+      - name: Isort linter
+        run: |
+          source venv/bin/activate
+          isort --sp .github/configurations/python_linters/.isort.cfg --profile black .
+      

@@ -1,10 +1,11 @@
 import os
+
 import environ
 from decouple import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = config("DJANGO_SECRET_KEY", default="fallback-secret")
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -19,8 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    #TODO: Custom installed app (add manually here after installing the .tar.gz)
+    # TODO: Custom installed app (add manually here after installing the .tar.gz)
     "impossible_travel",
 ]
 
@@ -54,13 +54,13 @@ ROOT_URLCONF = "djangifylab_project.urls"
 WSGI_APPLICATION = "djangifylab_project.wsgi.application"
 
 DATABASES = {
-    'default': {
-        'ENGINE': env('DB_ENGINE', default='django.db.backends.sqlite3'),
-        'NAME': env('DB_NAME', default=os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': env('DB_USER', default=''),
-        'PASSWORD': env('DB_PASSWORD', default=''),
-        'HOST': env('DB_HOST', default=''),
-        'PORT': env('DB_PORT', default=''),
+    "default": {
+        "ENGINE": env("DB_ENGINE", default="django.db.backends.sqlite3"),
+        "NAME": env("DB_NAME", default=os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": env("DB_USER", default=""),
+        "PASSWORD": env("DB_PASSWORD", default=""),
+        "HOST": env("DB_HOST", default=""),
+        "PORT": env("DB_PORT", default=""),
     }
 }
 
@@ -72,7 +72,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-#TODO: ADD env variables used in your app
+# TODO: ADD env variables used in your app
 OPTIONAL_ENV_VARS = [
     "CERTEGO_BUFFALOGS_CONFIG_PATH",
     "CERTEGO_BUFFALOGS_IGNORED_USERS",
