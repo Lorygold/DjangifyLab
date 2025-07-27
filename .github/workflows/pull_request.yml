@@ -23,7 +23,7 @@ jobs:
           python3 -m venv venv
           source venv/bin/activate
           pip install --upgrade pip
-          pip install flake8==7.3.0 black==25.1.0 isort==6.0.1
+          pip install flake8==7.3.0 black==25.1.0 isort==6.0.1 pytest==8.4.1
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Black linter
@@ -39,3 +39,7 @@ jobs:
           source venv/bin/activate
           isort --sp .github/configurations/python_linters/.isort.cfg --profile black .
       
+      - name: Python tests
+        run: |
+          source venv/bin/activate
+          pytest tests/
