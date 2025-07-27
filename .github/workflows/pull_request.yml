@@ -43,3 +43,23 @@ jobs:
         run: |
           source venv/bin/activate
           pytest tests/
+
+      - name: Install Django example apps from archives
+        run: |
+          source venv/bin/activate
+          for archive in example-apps/*.{tar.gz,tar.xz}; do
+            if [ -f "$archive" ]; then
+              echo "Installing $archive"
+              pip install "$archive"
+            fi
+          done
+
+      - name: Check for model changes (makemigrations)
+        run: |
+          source venv/bin/activate
+          python manage.py makemigrations --check --dry-run
+
+      - name: Test migration plan
+        run: |
+          source venv/bin/activate
+          python manage.py migrate --plan
