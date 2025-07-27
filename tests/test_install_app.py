@@ -61,8 +61,10 @@ def test_install_from_folder(tmp_path):
     with mock.patch("install_app.install_package") as mock_install:
         install_app.install_from_folder(str(tmp_path))
         assert mock_install.call_count == 2
-        assert mock_install.call_args_list[0][0][0] == str(dummy_pkg)
-        assert mock_install.call_args_list[1][0][0] == str(subdir)
+        called_args = {call.args[0] for call in mock_install.call_args_list}
+        expected_args = {str(dummy_pkg), str(subdir)}
+        # check that both the packages have been passed, regardless of order
+        assert called_args == expected_args
 
 
 def test_install_from_folder_empty(tmp_path):
