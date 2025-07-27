@@ -44,3 +44,17 @@ jobs:
           git config --global user.name "GitHub Actions"
           git tag -a "v${{ env.VERSION }}" -m "Release version ${{ env.VERSION }}"
           git push origin "v${{ env.VERSION }}"
+
+      - name: Create GitHub Release
+        if: steps.version_check.outputs.valid == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ env.VERSION }}"
+          name: "Version v${{ env.VERSION }}"
+          draft: false
+          generate_release_notes: true
+          prerelease: false
+          target_commitish: ${{ github.event.pull_request.base.ref }}
+          append_body: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}

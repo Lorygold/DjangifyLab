@@ -1,4 +1,7 @@
 # 1.x.x
+## 1.2.0
+### Features
+* CI/CD: Added the "GitHub Release" step in the deploy workflow with softprops/action-gh-release@v2
 ## 1.1.2
 ### Bugfix
 * CI/CD: Added the x-access-token in the deploy pipeline to push the tag
