@@ -39,6 +39,7 @@ jobs:
       - name: Create Git Tag
         if: steps.version_check.outputs.valid == 'true'
         run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/Lorygold/DjangifyLab.git
           git fetch --tags
           git config --global user.name "GitHub Actions"
           git tag -a "v${{ env.VERSION }}" -m "Release version ${{ env.VERSION }}"
