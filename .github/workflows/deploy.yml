@@ -33,12 +33,13 @@ jobs:
       - name: Checkout code
         if: steps.version_check.outputs.valid == 'true'
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
 
       - name: Create Git Tag
         if: steps.version_check.outputs.valid == 'true'
         run: |
           git fetch --tags
-          git config --global user.email "github-actions@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
           git tag -a "v${{ env.VERSION }}" -m "Release version ${{ env.VERSION }}"
           git push origin "v${{ env.VERSION }}"
