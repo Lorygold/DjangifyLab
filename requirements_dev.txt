@@ -1,0 +1,2 @@
+pytest==8.4.1       # (dev) complex functional testing for applications and libraries
+pytest-mock~=3.14.1 #(dev) provides a mocker fixture which is a thin-wrapper around the patching API provided by the mock package

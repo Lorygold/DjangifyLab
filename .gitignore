@@ -1,2 +1,5 @@
 .env
+*.pyc
+.vscode
+.venv
 app_config_files/

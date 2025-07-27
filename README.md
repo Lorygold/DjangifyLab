@@ -92,3 +92,5 @@ python manage.py mgmt_command_name_of_you_app
 
 Your app is now ready to be tested in a clean, production-like environment.
 
+## Example
+Switching to the `example-buffalogs-app` branch, you can see an example of a real django app like BuffaLogs (my open-source project thesis)
