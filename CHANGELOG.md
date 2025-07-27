@@ -1,4 +1,7 @@
 # 1.x.x
+## 1.1.2
+### Bugfix
+* CI/CD: Added the x-access-token in the deploy pipeline to push the tag
 ## 1.1.1
 ### Bugfix
 * CI/CD: Fixed the deploy workflow
