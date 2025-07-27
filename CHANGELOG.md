@@ -1,3 +1,7 @@
+# 1.x.x
+## 1.1.1
+### Bugfix
+* CI/CD: Fixed the deploy workflow
 ## 1.1.0
 ### Features
 * Handled the multi-installation for more Django Reusable Apps in the example-apps folder (to check apps compatibility)
