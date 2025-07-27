@@ -1,4 +1,4 @@
-name: Deploy on Version PR
+name: Deploy New Version
 
 on:
   pull_request:
@@ -12,25 +12,33 @@ jobs:
     if: |
       github.event.pull_request.merged == true &&
       github.event.pull_request.base.ref == 'main' &&
-      github.event.pull_request.head.ref == 'develop' &&
-      github.event.pull_request.title =~ '^\d+\.\d+\.\d+$'
+      github.event.pull_request.head.ref == 'develop'
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check version format
+        id: version_check
+        run: |
+          VERSION="${{ github.event.pull_request.title }}"
+          echo "Pull request title: $VERSION"
+          if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Valid semver version"
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
+            echo "valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "Invalid version format: '$VERSION'. Skipping tag."
+            echo "valid=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Checkout code
+        if: steps.version_check.outputs.valid == 'true'
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Extract version from PR title
-        id: version
-        run: |
-          echo "::set-output name=tag::v${{ github.event.pull_request.title }}"
-
       - name: Create Git Tag
+        if: steps.version_check.outputs.valid == 'true'
         run: |
-          git tag ${{ steps.version.outputs.tag }}
-          git push origin ${{ steps.version.outputs.tag }}
+          git fetch --tags
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+          git tag -a "v${{ env.VERSION }}" -m "Release version ${{ env.VERSION }}"
+          git push origin "v${{ env.VERSION }}"
