@@ -1,0 +1,99 @@
+[
+  {
+    "model": "impossible_travel.user",
+    "pk": 1,
+    "fields": {
+      "risk_score": "Medium",
+      "username": "jdoe",
+      "created": "2024-07-01T12:00:00Z",
+      "updated": "2024-07-01T12:00:00Z"
+    }
+  },
+  {
+    "model": "impossible_travel.login",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "created": "2024-07-01T12:10:00Z",
+      "updated": "2024-07-01T12:10:00Z",
+      "timestamp": "2024-07-01T12:05:00Z",
+      "latitude": 45.4642,
+      "longitude": 9.19,
+      "country": "Italy",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+      "index": "idx-001",
+      "event_id": "evt-001",
+      "ip": "192.168.1.1"
+    }
+  },
+  {
+    "model": "impossible_travel.alert",
+    "pk": 1,
+    "fields": {
+      "name": "Imp Travel",
+      "user": 1,
+      "login_raw_data": {
+        "timestamp": "2024-07-01T12:05:00Z",
+        "ip": "192.168.1.1",
+        "country": "Italy"
+      },
+      "created": "2024-07-01T12:15:00Z",
+      "updated": "2024-07-01T12:15:00Z",
+      "description": "Detected login from two distant locations in short time.",
+      "is_vip": true,
+      "filter_type": ["ignored_users filter", "allowed_countries filter"],
+      "notified_status": {
+        "email": "sent",
+        "slack": "pending"
+      }
+    }
+  },
+  {
+    "model": "impossible_travel.usersip",
+    "pk": 1,
+    "fields": {
+      "created": "2024-07-01T12:00:00Z",
+      "updated": "2024-07-01T12:00:00Z",
+      "user": 1,
+      "ip": "192.168.1.1"
+    }
+  },
+  {
+    "model": "impossible_travel.tasksettings",
+    "pk": 1,
+    "fields": {
+      "task_name": "daily_detection_task",
+      "created": "2024-07-01T11:00:00Z",
+      "updated": "2024-07-01T11:00:00Z",
+      "start_date": "2024-07-01T00:00:00Z",
+      "end_date": "2024-07-02T00:00:00Z"
+    }
+  },
+  {
+    "model": "impossible_travel.config",
+    "pk": 1,
+    "fields": {
+      "created": "2024-07-01T10:00:00Z",
+      "updated": "2024-07-01T10:00:00Z",
+      "ignored_users": ["^admin.*$", "test_user"],
+      "enabled_users": ["jdoe", "asmith"],
+      "vip_users": ["ceo", "jdoe"],
+      "alert_is_vip_only": true,
+      "alert_minimum_risk_score": "Low",
+      "risk_score_increment_alerts": ["Imp Travel", "New Device"],
+      "ignored_ips": ["10.0.0.0/8", "192.168.1.1"],
+      "allowed_countries": ["Italy", "Germany", "error", "IT"],
+      "ignored_ISPs": ["FastWeb", "TIM"],
+      "ignore_mobile_logins": true,
+      "filtered_alerts_types": ["User Risk Threshold", "Anonymous IP Login"],
+      "threshold_user_risk_alert": "High",
+      "distance_accepted": 500,
+      "vel_accepted": 800,
+      "atypical_country_days": 30,
+      "user_max_days": 180,
+      "login_max_days": 90,
+      "alert_max_days": 60,
+      "ip_max_days": 30
+    }
+  }
+]
