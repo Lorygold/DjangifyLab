@@ -4,7 +4,6 @@ services:
   postgres:
     container_name: djangifylab_postgres_db
     image: postgres:16-alpine
-    restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
