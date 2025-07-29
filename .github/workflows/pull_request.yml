@@ -56,13 +56,13 @@ jobs:
         run: docker compose -f docker-compose.database.yml -f docker-compose.override.yml build postgres upgrade-runner app-installer
 
       - name: Start dependent services (postgres)
-        run: docker compose -f docker-compose.override.yml up -d postgres
+        run: docker compose -f docker-compose.database.yml -f docker-compose.override.yml up -d postgres
 
       - name: Run upgrade-runner container
-        run: docker compose -f docker-compose.override.yml run --rm upgrade-runner
+        run: docker compose -f docker-compose.database.yml -f docker-compose.override.yml run --rm upgrade-runner
 
       - name: Run app-installer container
-        run: docker compose -f docker-compose.override.yml run --rm app-installer
+        run: docker compose -f docker-compose.database.yml -f docker-compose.override.yml run --rm app-installer
 
       - name: Stop all containers
         run: docker compose -f docker-compose.override.yml down
