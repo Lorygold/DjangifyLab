@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     container_name: djangifylab_postgres_db
@@ -12,8 +10,10 @@ services:
       POSTGRES_DB: djangifylab
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - djangifylab_network
     healthcheck:
-            test: ["CMD", "pg_isready", "-U", "default_user", "-d", "buffalogs"]
+            test: ["CMD", "pg_isready", "-U", "django", "-d", "djangifylab"]
             interval: 10s
             timeout: 5s
             retries: 5
@@ -32,3 +32,7 @@ volumes:
         driver: local
     mongo_data:
         driver: local
+
+networks:
+  djangifylab_network:
+    driver: bridge

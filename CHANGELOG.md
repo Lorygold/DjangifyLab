@@ -1,7 +1,10 @@
 # 1.x.x
 ## 1.3.0
 ### Features
-* Added the script `test_upgrade_apps` in order to test the compatibility between two versions of an app. Example: > python test_app_upgrade.py --previous_version=example-apps/buffalogs-2.7.0.tar.gz --new_version=example-apps/buffalogs-2.8.0.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixture.json --db=postgres
+* Added the single `entrypoint.py` script to run a single app installation or an app upgrade to test the compatibility between two versions of an app
+* Upgraded Django to 5.2.4
+* Added the `uprgade-runner` docker service in order to run the upgrade test mode in a container
+* Added the `app-installer` docker service in order to run the install mode in a container
 ### Changes
 * Set PostgreSQL as default DB
 * Added the BuffaLogs 2.8.0 django app as test
