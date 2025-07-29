@@ -50,7 +50,7 @@ jobs:
         run: docker compose -f docker-compose.database.yml -f docker-compose.override.yml run --rm app-installer
 
       - name: Stop all containers
-        run: docker compose -f docker-compose.override.yml down
+        run: docker compose -f docker-compose.database.yml -f docker-compose.override.yml down
 
       - name: Python tests
         run: |
