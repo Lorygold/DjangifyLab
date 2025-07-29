@@ -58,7 +58,7 @@ def run_upgrade(previous, new, fixture, db_engine):
 
 def main():
     # Installation example: > python entrypoint.py --mode=install --target=example-apps/packages/buffalogs-2.7.0.tar.gz --db=postgres
-    # Upgrade example: > (djangifylab) lorygold@lorygold-T15:~/Projects/Personal/DjangifyLab$ python entrypoint.py --mode=upgrade --previous_version=example-apps/packages/buffalogs-2.7.0.tar.gz --new_version=example-apps/packages/buffalogs-2.8.0.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixtures.json --db=postgres
+    # Upgrade example: > python entrypoint.py --mode=upgrade --previous_version=example-apps/packages/buffalogs-2.7.0.tar.gz --new_version=example-apps/packages/buffalogs-2.8.0.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixtures.json --db=postgres
     parser = argparse.ArgumentParser(description="Unified entrypoint for DjangifyLab tasks")
     parser.add_argument("--mode", choices=["install", "upgrade"], required=True)
     parser.add_argument("--target", help="Package or folder path for install mode")
