@@ -1,4 +1,10 @@
 # 1.x.x
+## 1.3.0
+### Features
+* Added the script `test_upgrade_apps` in order to test the compatibility between two versions of an app. Example: > python test_app_upgrade.py --previous_version=example-apps/buffalogs-2.7.0.tar.gz --new_version=example-apps/buffalogs-2.8.0.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixture.json --db=postgres
+### Changes
+* Set PostgreSQL as default DB
+* Added the BuffaLogs 2.8.0 django app as test
 ## 1.2.0
 ### Features
 * CI/CD: Added the "GitHub Release" step in the deploy workflow with softprops/action-gh-release@v2
