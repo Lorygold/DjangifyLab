@@ -53,7 +53,7 @@ jobs:
           isort --sp .github/configurations/python_linters/.isort.cfg --profile black .
       
       - name: Build all required Docker images
-        run: docker-compose -f docker-compose.override.yml build postgres upgrade-runner app-installer
+        run: docker compose -f docker-compose.override.yml build postgres upgrade-runner app-installer
 
       - name: Start dependent services (postgres)
         run: docker compose -f docker-compose.override.yml up -d postgres
