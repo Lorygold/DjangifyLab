@@ -5,27 +5,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
 MIDDLEWARE = [
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 INSTALLED_APPS = [
@@ -46,7 +46,7 @@ DATABASES = {
         "NAME": "djangifylab",
         "USER": "django",
         "PASSWORD": "django",
-        "HOST": "localhost",
+        "HOST": "postgres",
         "PORT": "5432",
     }
 }
@@ -67,4 +67,6 @@ CERTEGO_BUFFALOGS_ALERT_MAX_DAYS = os.getenv("CERTEGO_BUFFALOGS_ALERT_MAX_DAYS",
 CERTEGO_BUFFALOGS_IP_MAX_DAYS = os.getenv("CERTEGO_BUFFALOGS_IP_MAX_DAYS", 45)
 CERTEGO_BUFFALOGS_ATYPICAL_COUNTRY_DAYS = os.getenv("CERTEGO_BUFFALOGS_ATYPICAL_COUNTRY_DAYS", 30)
 CERTEGO_BUFFALOGS_MOBILE_DEVICES = os.getenv("CERTEGO_BUFFALOGS_MOBILE_DEVICES", ["iOS", "Android", "Windows Phone"])
-CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS = os.getenv("CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS", ["New Country", "Anonymous IP Login", "Atypical Country", "Imp Travel"])
+CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS = os.getenv(
+    "CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS", ["New Country", "Anonymous IP Login", "Atypical Country", "Imp Travel"]
+)
