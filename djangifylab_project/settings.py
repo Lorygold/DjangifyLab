@@ -59,7 +59,7 @@ DATABASES = {
         "NAME": env("DB_NAME", default="djangifylab"),
         "USER": env("DB_USER", default="django"),
         "PASSWORD": env("DB_PASSWORD", default="django"),
-        "HOST": env("DB_HOST", default="localhost"),
+        "HOST": env("DB_HOST", default="postgres"),
         "PORT": env("DB_PORT", default="5432"),
     }
 }
@@ -88,5 +88,6 @@ CERTEGO_BUFFALOGS_ALERT_MAX_DAYS = os.getenv("CERTEGO_BUFFALOGS_ALERT_MAX_DAYS",
 CERTEGO_BUFFALOGS_IP_MAX_DAYS = os.getenv("CERTEGO_BUFFALOGS_IP_MAX_DAYS", 45)
 CERTEGO_BUFFALOGS_ATYPICAL_COUNTRY_DAYS = os.getenv("CERTEGO_BUFFALOGS_ATYPICAL_COUNTRY_DAYS", 30)
 CERTEGO_BUFFALOGS_MOBILE_DEVICES = os.getenv("CERTEGO_BUFFALOGS_MOBILE_DEVICES", ["iOS", "Android", "Windows Phone"])
-CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS = os.getenv("CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS", ["New Country", "Anonymous IP Login", "Atypical Country", "Imp Travel"])
-
+CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS = os.getenv(
+    "CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS", ["New Country", "Anonymous IP Login", "Atypical Country", "Imp Travel"]
+)

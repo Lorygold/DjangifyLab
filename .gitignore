@@ -4,4 +4,3 @@
 .venv
 *_venv/*
 venv/
-app_config_files/
