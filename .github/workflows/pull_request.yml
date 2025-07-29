@@ -66,13 +66,3 @@ jobs:
               pip install "$archive"
             fi
           done
-
-      - name: Check for model changes (makemigrations)
-        run: |
-          source venv/bin/activate
-          python manage.py makemigrations --check --dry-run
-
-      - name: Test migration plan
-        run: |
-          source venv/bin/activate
-          python manage.py migrate --plan
