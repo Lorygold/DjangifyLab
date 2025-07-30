@@ -1,19 +1,20 @@
+version: '3.8'
+
 services:
   postgres:
     container_name: djangifylab_postgres_db
     image: postgres:16-alpine
+    restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: django
+      POSTGRES_DB: djangifylab
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - djangifylab_network
     healthcheck:
-            test: ["CMD", "pg_isready", "-U", "django", "-d", "djangifylab"]
+            test: ["CMD", "pg_isready", "-U", "default_user", "-d", "buffalogs"]
             interval: 10s
             timeout: 5s
             retries: 5
@@ -32,7 +33,3 @@ volumes:
         driver: local
     mongo_data:
         driver: local
-
-networks:
-  djangifylab_network:
-    driver: bridge

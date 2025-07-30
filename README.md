@@ -20,7 +20,6 @@ DjangifyLab provides:
 
 This helps ensure your reusable app is **self-contained, fully functional, and truly reusable** in any Django environment.
 
--- Currently, DjangifyLab uses PostgreSQL as default DB. Also sqlite and mongo are supported, but some changes are required.
 
 ## Quickstart
 
@@ -29,21 +28,27 @@ Follow these steps to install setup DjangifyLab (just for the first time):
 
 - Clone the repository:
 ```bash
-> git clone https://github.com/Lorygold/DjangifyLab.git
-> cd DjangifyLab
+git clone https://github.com/Lorygold/DjangifyLab.git
+cd DjangifyLab
 ```
 - Create and activate the virtual environment:
 ```bash
-> python -m venv djangifylab-venv
-> source djangifylab-venv/bin/activate
+python -m venv djangifylab-venv
+source djangifylab-venv/bin/activate
 ```
 - Install the DjangifyLab requirements:
 ```bash
-> pip install -r requirements.txt
+pip install -r requirements.txt
 ```
-- Create your admin Django superuser to access to the Django admin page if you'd like to check the models of your django app (store your credentials):
+- Create your admin Django superuser to access to the Django admin page (store your credentials):
 ```bash
-> python manage.py createsuperuser
+python manage.py createsuperuser
+```
+
+2. Install your Django App to test
+```bash
+source djangifylab-venv/bin/activate
+python install_app.py example-apps/your_app.tar.gz
 ```
 
 Then, manually add your app to `INSTALLED_APPS` in `djangifylab_project/settings.py`:
@@ -67,31 +72,25 @@ If your app depends on external config files (e.g., JSON, YAML), place them insi
 
 And in the `.env` file: `MY_APP_CONFIG_PATH=/full/path/to/DjangifyLab/config_files/your_app_name`
 
-5. Start Required Services with Docker
+5. (Optional) Start Required Services with Docker
 
 If your app relies on services like PostgreSQL, MongoDB, Redis, etc., you can start them via Docker:
 
 ```bash
-> docker compose -f docker/docker-compose.database.yml up -d postgres
+docker compose -f docker/docker-compose.database.yml up -d postgres
 ```
 
-2a. Test your Django app - if it's a single version app - with the single command line:
-        
-    > python entrypoint.py --mode=install --target=example-apps/packages/your_app_name.tar.gz
+6. Run the app and Launch your management commands
 
-2b. Test your Django app - if it's a single version app - in the container:
-            
-    > docker compose -f docker-compose.override.yml up --build app-installer
-    
-2c. Test your Django app - if it's an upgrade version test - with the single command line:
-            
-    > python entrypoint.py --mode=upgrade --previous_version=example-apps/packages/your_app_name_prev_version.tar.gz --new_version=example-apps/packages/your_app_name_new_version.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixtures.json
+First of all, apply the migrations, then you can run the django server and the mangements commands available in your app:
 
-2d. Test your Django app - if it's an upgrade version test - in the container:
-            
-    > docker compose -f docker-compose.override.yml up --build upgrade-runner
+```bash
+python manage.py migrate
+python manage.py runserver
+python manage.py mgmt_command_name_of_you_app
+```
 
 Your app is now ready to be tested in a clean, production-like environment.
 
 ## Example
-The BuffaLogs Django Reusable App has been used to test this project, so it's possibile to check the config file presence (in the `app_config_giles/buffalogs/` folder) and the app itself with fixture (in the `example-apps`)
+Switching to the `example-buffalogs-app` branch, you can see an example of a real django app like BuffaLogs (my open-source project thesis)
