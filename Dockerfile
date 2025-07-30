@@ -18,5 +18,3 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Create directories for mounting (se vuoi montarli da host)
 RUN mkdir -p /app/packages /app/fixtures /app/logs
-
-CMD ["python", "entrypoint.py"]
