@@ -7,8 +7,6 @@ jobs:
     name: Pull Request Workflow
     runs-on: ubuntu-latest
 
-    # services:
-
     steps:
       - uses: actions/checkout@v4
 
@@ -16,6 +14,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Load environment variables
+        run: |
+          set -a
+          source .env
+          set +a
 
       - name: Install dependencies
         run: |
@@ -39,6 +43,21 @@ jobs:
           source venv/bin/activate
           isort --sp .github/configurations/python_linters/.isort.cfg --profile black .
       
+      - name: Build all required Docker images
+        run: docker compose --env-file .env -f docker-compose.database.yml -f docker-compose.override.yml build postgres upgrade-runner app-installer
+
+      - name: Start dependent services (postgres)
+        run: docker compose --env-file .env -f docker-compose.database.yml -f docker-compose.override.yml up -d postgres
+
+      - name: Run upgrade-runner container
+        run: docker compose --env-file .env -f docker-compose.database.yml -f docker-compose.override.yml run --rm upgrade-runner
+
+      - name: Run app-installer container
+        run: docker compose --env-file .env -f docker-compose.database.yml -f docker-compose.override.yml run --rm app-installer
+
+      - name: Stop all containers
+        run: docker compose --env-file .env -f docker-compose.database.yml -f docker-compose.override.yml down
+
       - name: Python tests
         run: |
           source venv/bin/activate
@@ -47,19 +66,9 @@ jobs:
       - name: Install Django example apps from archives
         run: |
           source venv/bin/activate
-          for archive in example-apps/*.{tar.gz,tar.xz}; do
+          for archive in example-apps/packages/*.{tar.gz,tar.xz}; do
             if [ -f "$archive" ]; then
               echo "Installing $archive"
               pip install "$archive"
             fi
           done
-
-      - name: Check for model changes (makemigrations)
-        run: |
-          source venv/bin/activate
-          python manage.py makemigrations --check --dry-run
-
-      - name: Test migration plan
-        run: |
-          source venv/bin/activate
-          python manage.py migrate --plan
