@@ -95,3 +95,6 @@ Your app is now ready to be tested in a clean, production-like environment.
 
 ## Example
 The BuffaLogs Django Reusable App has been used to test this project, so it's possibile to check the config file presence (in the `app_config_giles/buffalogs/` folder) and the app itself with fixture (in the `example-apps`)
+
+## Licence
+This project is protected by the Apache Licence 2.0.
