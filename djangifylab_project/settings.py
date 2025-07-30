@@ -4,7 +4,6 @@ import environ
 from decouple import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
@@ -56,12 +55,12 @@ WSGI_APPLICATION = "djangifylab_project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.getenv("DB_NAME") or str(BASE_DIR / "db.sqlite3"),
-        "USER": os.getenv("DB_USER", ""),
-        "PASSWORD": os.getenv("DB_PASSWORD", ""),
-        "HOST": os.getenv("DB_HOST", ""),
-        "PORT": os.getenv("DB_PORT", ""),
+        "ENGINE": env("DB_ENGINE", default="django.db.backends.sqlite3"),
+        "NAME": env("DB_NAME", default=os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": env("DB_USER", default=""),
+        "PASSWORD": env("DB_PASSWORD", default=""),
+        "HOST": env("DB_HOST", default=""),
+        "PORT": env("DB_PORT", default=""),
     }
 }
 
@@ -74,7 +73,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # TODO: ADD env variables used in your app
-CERTEGO_BUFFALOGS_CONFIG_PATH = os.getenv("CERTEGO_BUFFALOGS_CONFIG_PATH", "app_config_files")
+CERTEGO_BUFFALOGS_CONFIG_PATH = os.getenv("CERTEGO_BUFFALOGS_CONFIG_PATH", "/opt/certego/config/")
 CERTEGO_BUFFALOGS_IGNORED_USERS = os.getenv("CERTEGO_BUFFALOGS_IGNORED_USERS", ["Not Available", "N/A"])
 CERTEGO_BUFFALOGS_ENABLED_USERS = os.getenv("CERTEGO_BUFFALOGS_ENABLED_USERS", [])
 CERTEGO_BUFFALOGS_ALLOWED_COUNTRIES = os.getenv("CERTEGO_BUFFALOGS_ALLOWED_COUNTRIES", [])
@@ -89,6 +88,5 @@ CERTEGO_BUFFALOGS_ALERT_MAX_DAYS = os.getenv("CERTEGO_BUFFALOGS_ALERT_MAX_DAYS",
 CERTEGO_BUFFALOGS_IP_MAX_DAYS = os.getenv("CERTEGO_BUFFALOGS_IP_MAX_DAYS", 45)
 CERTEGO_BUFFALOGS_ATYPICAL_COUNTRY_DAYS = os.getenv("CERTEGO_BUFFALOGS_ATYPICAL_COUNTRY_DAYS", 30)
 CERTEGO_BUFFALOGS_MOBILE_DEVICES = os.getenv("CERTEGO_BUFFALOGS_MOBILE_DEVICES", ["iOS", "Android", "Windows Phone"])
-CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS = os.getenv(
-    "CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS", ["New Country", "Anonymous IP Login", "Atypical Country", "Imp Travel"]
-)
+CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS = os.getenv("CERTEGO_BUFFALOGS_RISK_SCORE_INCREMENT_ALERTS", ["New Country", "Anonymous IP Login", "Atypical Country", "Imp Travel"])
+

@@ -1,15 +1,4 @@
 # 1.x.x
-## 1.3.0
-### Features
-* Added the single `entrypoint.py` script to run a single app installation or an app upgrade to test the compatibility between two versions of an app
-* Upgraded Django to 5.2.4
-* Added the `uprgade-runner` docker service in order to run the upgrade test mode in a container
-* Added the `app-installer` docker service in order to run the install mode in a container
-* Added the dynamic database selection based on the `.env-driven` modern Django project structures
-* Added University exam project report
-### Changes
-* Set PostgreSQL as default DB
-* Added the BuffaLogs 2.8.0 django app as test
 ## 1.2.0
 ### Features
 * CI/CD: Added the "GitHub Release" step in the deploy workflow with softprops/action-gh-release@v2
