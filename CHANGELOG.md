@@ -5,6 +5,7 @@
 * Upgraded Django to 5.2.4
 * Added the `uprgade-runner` docker service in order to run the upgrade test mode in a container
 * Added the `app-installer` docker service in order to run the install mode in a container
+* Added the dynamic database selection based on the `.env-driven` modern Django project structures
 ### Changes
 * Set PostgreSQL as default DB
 * Added the BuffaLogs 2.8.0 django app as test

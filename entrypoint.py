@@ -32,15 +32,15 @@ def install_from_folder(folder_path: str):
             install_package(full_path)
 
 
-def run_django_command(*args, settings_module="djangifylab_project.settings_pg"):
-    cmd = [sys.executable, "manage.py"] + list(args) + ["--settings", settings_module]
+def run_django_command(*args):
+    cmd = [sys.executable, "manage.py"] + list(args)
     subprocess.check_call(cmd)
 
 
-def run_upgrade(previous, new, fixture, db_engine):
+def run_upgrade(previous, new, fixture):
     print("Starting upgrade test...")
     reinstall_requirements()
-    os.environ["DJANGO_SETTINGS_MODULE"] = "djangifylab_project.settings_pg" if db_engine == "postgres" else "djangifylab_project.settings"
+    os.environ["DJANGO_SETTINGS_MODULE"] = "djangifylab_project.settings"
 
     # Install previous
     install_package(previous)
@@ -57,15 +57,14 @@ def run_upgrade(previous, new, fixture, db_engine):
 
 
 def main():
-    # Installation example: > python entrypoint.py --mode=install --target=example-apps/packages/buffalogs-2.7.0.tar.gz --db=postgres
-    # Upgrade example: > python entrypoint.py --mode=upgrade --previous_version=example-apps/packages/buffalogs-2.7.0.tar.gz --new_version=example-apps/packages/buffalogs-2.8.0.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixtures.json --db=postgres
+    # Installation example: > python entrypoint.py --mode=install --target=example-apps/packages/buffalogs-2.7.0.tar.gz
+    # Upgrade example: > python entrypoint.py --mode=upgrade --previous_version=example-apps/packages/buffalogs-2.7.0.tar.gz --new_version=example-apps/packages/buffalogs-2.8.0.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixtures.json
     parser = argparse.ArgumentParser(description="Unified entrypoint for DjangifyLab tasks")
     parser.add_argument("--mode", choices=["install", "upgrade"], required=True)
     parser.add_argument("--target", help="Package or folder path for install mode")
     parser.add_argument("--previous_version", help="Path to previous .tar.gz")
     parser.add_argument("--new_version", help="Path to new .tar.gz")
     parser.add_argument("--fixture", help="Fixture JSON path")
-    parser.add_argument("--db", choices=["sqlite", "postgres"], default="sqlite")
     args = parser.parse_args()
 
     if args.mode == "install":
@@ -80,7 +79,7 @@ def main():
         if not (args.previous_version and args.new_version and args.fixture):
             print("ERROR: --previous_version, --new_version, and --fixture are required for upgrade mode.")
             sys.exit(1)
-        run_upgrade(args.previous_version, args.new_version, args.fixture, args.db)
+        run_upgrade(args.previous_version, args.new_version, args.fixture)
 
 
 if __name__ == "__main__":

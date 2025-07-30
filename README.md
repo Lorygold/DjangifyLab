@@ -77,7 +77,7 @@ If your app relies on services like PostgreSQL, MongoDB, Redis, etc., you can st
 
 2a. Test your Django app - if it's a single version app - with the single command line:
         
-    > python entrypoint.py --mode=install --target=example-apps/packages/your_app_name.tar.gz --db=postgres
+    > python entrypoint.py --mode=install --target=example-apps/packages/your_app_name.tar.gz
 
 2b. Test your Django app - if it's a single version app - in the container:
             
@@ -85,7 +85,7 @@ If your app relies on services like PostgreSQL, MongoDB, Redis, etc., you can st
     
 2c. Test your Django app - if it's an upgrade version test - with the single command line:
             
-    > python entrypoint.py --mode=upgrade --previous_version=example-apps/packages/your_app_name_prev_version.tar.gz --new_version=example-apps/packages/your_app_name_new_version.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixtures.json --db=postgres
+    > python entrypoint.py --mode=upgrade --previous_version=example-apps/packages/your_app_name_prev_version.tar.gz --new_version=example-apps/packages/your_app_name_new_version.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixtures.json
 
 2d. Test your Django app - if it's an upgrade version test - in the container:
             
