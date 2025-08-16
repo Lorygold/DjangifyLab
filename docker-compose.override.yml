@@ -1,5 +1,6 @@
 services:
   upgrade-runner:
+    container_name: djangifylab_upgrade-runner
     build:
       context: .
       dockerfile: Dockerfile
@@ -24,6 +25,7 @@ services:
       - djangifylab_network
 
   app-installer:
+    container_name: djangifylab_app-installer
     build:
       context: .
       dockerfile: Dockerfile
@@ -38,6 +40,30 @@ services:
       - postgres
     networks:
       - djangifylab_network
+
+  matrix-runner:
+    container_name: djangifylab_matrix-runner
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: djangifylab_project.settings
+    volumes:
+      - ./djangifylab_project:/app/djangifylab_project
+      - ./example-apps/packages:/app/packages
+      - ./example-apps/fixtures:/app/fixtures
+    command: >
+      python entrypoint.py
+      --mode matrix
+      --packages /app/packages
+      --fixture /app/fixtures/buffalogs_complete_fixture.json
+    depends_on:
+      - postgres
+    networks:
+      - djangifylab_network
+
 
 networks:
   djangifylab_network:
