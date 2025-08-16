@@ -1,7 +1,10 @@
 import argparse
 import os
+import re
 import subprocess
 import sys
+
+from tabulate import tabulate
 
 
 def uninstall_all():
@@ -55,21 +58,77 @@ def run_upgrade(previous, new, fixture):
 
     print("Upgrade test completed successfully.")
 
+def extract_version(filename):
+    match = re.search(r'(\d+\.\d+\.\d+)', filename)
+    return match.group(1) if match else None
+
+
+def run_matrix(packages_dir, fixture):
+    print(f"📊 Running upgrade compatibility matrix in {packages_dir} with fixture {fixture}")
+    os.makedirs("/app/logs", exist_ok=True)
+
+    pkgs = [os.path.join(packages_dir, p) for p in os.listdir(packages_dir)
+            if p.endswith((".tar.gz", ".whl"))]
+    pkgs_versions = sorted(((extract_version(p), p) for p in pkgs if extract_version(p)),
+                           key=lambda x: list(map(int, x[0].split("."))))
+
+    versions = [v for v, _ in pkgs_versions]
+    matrix = []
+
+    for src_version, src_path in pkgs_versions:
+        row = []
+        for dst_version, dst_path in pkgs_versions:
+            if src_version == dst_version:
+                row.append(" ")
+                continue
+            try:
+                uninstall_all()
+                run_upgrade(src_path, dst_path, fixture)
+                row.append("YES")
+            except subprocess.CalledProcessError:
+                row.append("NO")
+        matrix.append(row)
+
+    # Results printed on the console
+    print("\nUpgrade Compatibility Matrix:\n")
+    table_str = tabulate(matrix, headers=versions, showindex=versions, tablefmt="grid")
+    print(table_str)
+
+    # save markdown file with results
+    md_table = tabulate(matrix, headers=versions, showindex=versions, tablefmt="github")
+    md_content = (
+        "# Upgrade Compatibility Matrix\n\n"
+        f"Fixture used: `{fixture}`\n\n"
+        f"Packages folder: `{packages_dir}`\n\n"
+        f"{md_table}\n"
+    )
+
+    output_file = "upgrade_logs/compatibility_matrix.md"
+    with open(output_file, "w") as f:
+        f.write(md_content)
+
+    print(f"\n Compatibility matrix saved to {output_file}")
+
+
 
 def main():
     # Installation example: > python entrypoint.py --mode=install --target=example-apps/packages/buffalogs-2.7.0.tar.gz
     # Upgrade example: > python entrypoint.py --mode=upgrade --previous_version=example-apps/packages/buffalogs-2.7.0.tar.gz --new_version=example-apps/packages/buffalogs-2.8.0.tar.gz --fixture=example-apps/fixtures/buffalogs_complete_fixtures.json
+    # Versions compatibility example: > python entrypoint.py --mode matrix --packages /app/packages --fixture /app/fixtures/buffalogs_complete_fixture.json
     parser = argparse.ArgumentParser(description="Unified entrypoint for DjangifyLab tasks")
-    parser.add_argument("--mode", choices=["install", "upgrade"], required=True)
+    parser.add_argument("--mode", choices=["install", "upgrade", "matrix"], required=True)
     parser.add_argument("--target", help="Package or folder path for install mode")
     parser.add_argument("--previous_version", help="Path to previous .tar.gz")
     parser.add_argument("--new_version", help="Path to new .tar.gz")
     parser.add_argument("--fixture", help="Fixture JSON path")
+    parser.add_argument("--packages", help="Folder containing multiple versions for matrix mode")
+
     args = parser.parse_args()
 
+    uninstall_all()
+    reinstall_requirements()
+
     if args.mode == "install":
-        uninstall_all()
-        reinstall_requirements()
         if args.target:
             if os.path.isdir(args.target):
                 install_from_folder(args.target)
@@ -80,6 +139,11 @@ def main():
             print("ERROR: --previous_version, --new_version, and --fixture are required for upgrade mode.")
             sys.exit(1)
         run_upgrade(args.previous_version, args.new_version, args.fixture)
+    elif args.mode == "matrix":
+        if not (args.packages and args.fixture):
+            print("ERROR: --packages and --fixture are required for matrix mode.")
+            sys.exit(1)
+        run_matrix(args.packages, args.fixture)
 
 
 if __name__ == "__main__":
