@@ -64,7 +64,7 @@ def extract_version(filename):
 
 
 def run_matrix(packages_dir, fixture):
-    print(f"📊 Running upgrade compatibility matrix in {packages_dir} with fixture {fixture}")
+    print(f"Running upgrade compatibility matrix in {packages_dir} with fixture {fixture}")
     os.makedirs("/app/logs", exist_ok=True)
 
     pkgs = [os.path.join(packages_dir, p) for p in os.listdir(packages_dir)
@@ -72,7 +72,8 @@ def run_matrix(packages_dir, fixture):
     pkgs_versions = sorted(((extract_version(p), p) for p in pkgs if extract_version(p)),
                            key=lambda x: list(map(int, x[0].split("."))))
 
-    versions = [v for v, _ in pkgs_versions]
+    headers = [os.path.basename(p) for _, p in pkgs_versions]
+    index = headers
     matrix = []
 
     for src_version, src_path in pkgs_versions:
@@ -91,11 +92,11 @@ def run_matrix(packages_dir, fixture):
 
     # Results printed on the console
     print("\nUpgrade Compatibility Matrix:\n")
-    table_str = tabulate(matrix, headers=versions, showindex=versions, tablefmt="grid")
+    table_str = tabulate(matrix, headers=headers, showindex=index, tablefmt="grid")
     print(table_str)
 
     # save markdown file with results
-    md_table = tabulate(matrix, headers=versions, showindex=versions, tablefmt="github")
+    md_table = tabulate(matrix, headers=headers, showindex=index, tablefmt="github")
     md_content = (
         "# Upgrade Compatibility Matrix\n\n"
         f"Fixture used: `{fixture}`\n\n"
@@ -103,6 +104,7 @@ def run_matrix(packages_dir, fixture):
         f"{md_table}\n"
     )
 
+    os.makedirs("upgrade_logs", exist_ok=True)
     output_file = "upgrade_logs/compatibility_matrix.md"
     with open(output_file, "w") as f:
         f.write(md_content)

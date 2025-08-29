@@ -54,6 +54,7 @@ services:
       - ./djangifylab_project:/app/djangifylab_project
       - ./example-apps/packages:/app/packages
       - ./example-apps/fixtures:/app/fixtures
+      - ./upgrade_logs:/app/upgrade_logs
     command: >
       python entrypoint.py
       --mode matrix
