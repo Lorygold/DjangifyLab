@@ -81,7 +81,7 @@ If your app relies on services like PostgreSQL, MongoDB, Redis, etc., you can st
 
 2b. Test your Django app - if it's a single version app - in the container:
             
-    > docker compose -f docker-compose.override.yml up --build app-installer
+    > docker compose -f docker-compose.override.yml -f docker-compose.database.yml up --build app-installer
     
 2c. Test your Django app - if it's an upgrade version test - with the single command line:
             
@@ -89,7 +89,7 @@ If your app relies on services like PostgreSQL, MongoDB, Redis, etc., you can st
 
 2d. Test your Django app - if it's an upgrade version test - in the container:
             
-    > docker compose -f docker-compose.override.yml up --build upgrade-runner
+    > docker compose -f docker-compose.override.yml -f docker-compose.database.yml up --build upgrade-runner
 
 Your app is now ready to be tested in a clean, production-like environment.
 
