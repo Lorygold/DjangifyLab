@@ -1,11 +1,18 @@
 # Dockerfile
-FROM python:3.12-alpine
+FROM python:3.12-slim-trixie
 
 WORKDIR /app
 
 # Install OS packages
-RUN apk add --no-cache \
-    gcc musl-dev libpq-dev
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    python3-dev \
+    libc6-dev \
+    libpcre2-dev \
+    libssl-dev \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy essentials
 COPY requirements.txt .

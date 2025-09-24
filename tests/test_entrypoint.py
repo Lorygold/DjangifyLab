@@ -48,10 +48,10 @@ def test_reinstall_requirements(temp_dir):
 
 def test_install_package():
     # Test installation of a real .tar.gz package
-    package_path = os.path.abspath("example-apps/packages/buffalogs-2.7.0.tar.gz")
+    package_path = os.path.abspath("example-apps/packages/buffalogs-2.11.0.tar.gz")
     subprocess.check_call([sys.executable, "-m", "pip", "install", package_path])
 
-    assert importlib.metadata.version("buffalogs") == "2.7.0"
+    assert importlib.metadata.version("buffalogs") == "2.11.0"
 
 
 def test_install_from_folder():
@@ -60,4 +60,4 @@ def test_install_from_folder():
     entrypoint.install_from_folder(folder_path)
 
     version = importlib.metadata.version("buffalogs")
-    assert version in ("2.7.0", "2.8.0")
+    assert version in ("2.10.0", "2.11.0")

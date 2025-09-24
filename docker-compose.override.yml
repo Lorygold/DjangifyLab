@@ -16,8 +16,8 @@ services:
     command: >
       python entrypoint.py
       --mode upgrade
-      --previous_version /app/packages/buffalogs-2.7.0.tar.gz
-      --new_version /app/packages/buffalogs-2.8.0.tar.gz
+      --previous_version /app/packages/buffalogs-2.10.0.tar.gz
+      --new_version /app/packages/buffalogs-2.11.0.tar.gz
       --fixture /app/fixtures/buffalogs_complete_fixture.json
     depends_on:
       - postgres
