@@ -82,7 +82,6 @@ docker compose -f docker/docker-compose.database.yml up -d postgres
 
 6. Run the app and Launch your management commands
 
-<<<<<<< HEAD
 2b. Test your Django app - if it's a single version app - in the container:
             
     > docker compose -f docker-compose.override.yml -f docker-compose.database.yml up --build app-installer
@@ -94,24 +93,11 @@ docker compose -f docker/docker-compose.database.yml up -d postgres
 2d. Test your Django app - if it's an upgrade version test - in the container:
             
     > docker compose -f docker-compose.override.yml -f docker-compose.database.yml up --build upgrade-runner
-=======
-First of all, apply the migrations, then you can run the django server and the mangements commands available in your app:
-
-```bash
-python manage.py migrate
-python manage.py runserver
-python manage.py mgmt_command_name_of_you_app
-```
->>>>>>> main
 
 Your app is now ready to be tested in a clean, production-like environment.
 
 ## Example
-<<<<<<< HEAD
 The BuffaLogs Django Reusable App has been used to test this project, so it's possibile to check the config file presence (in the `app_config_giles/buffalogs/` folder) and the app itself with fixture (in the `example-apps`)
 
 ## Licence
 This project is protected by the Apache Licence 2.0.
-=======
-Switching to the `example-buffalogs-app` branch, you can see an example of a real django app like BuffaLogs (my open-source project thesis)
->>>>>>> main
